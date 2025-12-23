@@ -1,9 +1,17 @@
 "use client"
 
 import { getPriceHistory } from '@/app/actions';
-import { LineChart, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
-import { CartesianGrid, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import {
+  LineChart,
+  CartesianGrid,
+  Line,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 const PriceChart = ({ productId }) => {
 
