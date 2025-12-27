@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Deal Drop – Smart Price Tracker
+✨ **Live Demo → [🔗 https://deal-drop-rho.vercel.app](https://deal-drop-rho.vercel.app)** ✨
 
-## Getting Started
+Deal Drop is a full-stack web application that tracks product prices from any e-commerce website and automatically notifies users via email when prices drop. It includes secure authentication, automated background price monitoring, and price history visualization.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Track prices from any e-commerce product URL  
+- Automatic price drop detection  
+- Email alerts on price decreases  
+- Interactive price history charts  
+- Google authentication  
+- Secure, user-specific data access (RLS)  
+- Automated scheduled price checks  
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠 Tech Stack
 
-## Learn More
+**Frontend**
+- Next.js (App Router)
+- React
+- Tailwind CSS
+- shadCN UI
 
-To learn more about Next.js, take a look at the following resources:
+**Backend**
+- Supabase (PostgreSQL, Authentication, Row-Level Security)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Scraping**
+- Firecrawl API
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Email Notifications**
+- Resend API
 
-## Deploy on Vercel
+**Charts**
+- Recharts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Deployment**
+- Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🧠 How It Works
+
+1. User signs in using Google authentication.
+2. A product URL is submitted for tracking.
+3. Product details (price, name, image, currency) are extracted using Firecrawl.
+4. Data is stored securely in Supabase.
+5. A scheduled job periodically checks prices.
+6. If a price drop is detected:
+   - Price history is updated.
+   - An email alert is sent to the user.
+7. Users can view price trends via interactive charts.
+
+---
+
+## 🗄 Database Schema
+
+### Products
+- `id`
+- `user_id`
+- `url`
+- `name`
+- `current_price`
+- `currency`
+- `image_url`
+- `created_at`
+
+### Price History
+- `id`
+- `product_id`
+- `price`
+- `currency`
+- `checked_at`
+
+Row-Level Security ensures users can only access their own data.
+
+---
+
+## 🔐 Environment Variables
+
+Create a `.env.local` file and add:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+
+FIRECRAWL_API_KEY=
+
+RESEND_API_KEY=
+
+CRON_SECRET=
